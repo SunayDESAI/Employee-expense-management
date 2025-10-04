@@ -2,32 +2,19 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  background-color: #f9fafb;
+  font-family: system-ui, sans-serif;
 }
 
 /* --- Auth Page Styles --- */
@@ -97,16 +84,43 @@ body {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="date"],
+input[type="number"],
 select.auth-select,
+select,
 textarea {
-  width: 100%;
   padding: 0.7rem 0.85rem;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.1);
   font-size: 0.95rem;
-  color: #e6eef8;
+  color: #ffffff;
   box-shadow: inset 0 1px 0 rgba(2,6,23,0.02);
+}
+
+/* Light theme inputs for regular components */
+.dashboard-container input,
+.dashboard-container select,
+.dashboard-container textarea,
+.expense-form-container input,
+.expense-form-container select,
+.expense-form-container textarea {
+  background-color: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
+}
+
+/* Placeholder text styling */
+input::placeholder,
+textarea::placeholder {
+  color: #9ca3af;
+  opacity: 1;
+}
+
+.auth-card input::placeholder,
+.auth-card textarea::placeholder {
+  color: #94a3b8;
+  opacity: 0.8;
 }
 
 input:focus, select:focus, textarea:focus {
@@ -211,4 +225,90 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Demo Credentials Styles */
+.demo-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.demo-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.demo-header h3 {
+  color: #f8fafc;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.demo-header p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.demo-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.demo-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  color: #f8fafc;
+}
+
+.demo-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.demo-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.demo-button.employee:hover {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.demo-role {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.demo-email {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-family: 'Courier New', monospace;
+}
+
+.demo-note {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+}
+
+.demo-note code {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: #fbbf24;
 }
