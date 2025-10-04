@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
+  const { login, signup } = useAuth();
   
   const [formData, setFormData] = useState({
     name: "", 
@@ -30,7 +32,7 @@ export default function Auth() {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
@@ -47,13 +49,30 @@ export default function Auth() {
         return;
     }
 
-    const actionType = isLogin ? "Login" : "Sign Up (Admin Creation)";
-    console.log(`${actionType} attempt with data:`, formData);
+    try {
+      if (isLogin) {
+        await login(formData.email, formData.password);
+      } else {
+        await signup(formData);
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async (email) => {
+    setIsLoading(true);
+    setError(null);
     
-    setTimeout(() => {
-        setIsLoading(false);
-        console.log(`${actionType} Successful!`);
-    }, 2000); 
+    try {
+      await login(email, 'password');
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const toggleAuthMode = () => {
@@ -161,6 +180,27 @@ export default function Auth() {
           </button>
         </form>
         
+        {/* Demo Credentials Section */}
+        {isLogin && (
+          <div className="demo-section">
+            <div className="demo-header">
+              <h3>Try Demo Account</h3>
+              <p>Click the button below to login with demo credentials</p>
+            </div>
+            <div className="demo-buttons">
+              <button
+                onClick={() => handleDemoLogin('employee@company.com')}
+                disabled={isLoading}
+                className="demo-button employee"
+              >
+                <div className="demo-role">👤 Employee Dashboard</div>
+                <div className="demo-email">employee@company.com</div>
+              </button>
+            </div>
+            <p className="demo-note">Demo account uses password: <code>password</code></p>
+          </div>
+        )}
+        
     {isLogin && (
       <p className="auth-forgot">
         <button
@@ -189,7 +229,7 @@ export default function Auth() {
 
 const FormInput = ({ id, label, type, name, value, onChange, required }) => (
     <div>
-      <label htmlFor={id} className="block text-sm font-semibold text-gray-700 mb-1">
+      <label htmlFor={id} className="auth-label">
         {label}
       </label>
       <input
@@ -199,7 +239,16 @@ const FormInput = ({ id, label, type, name, value, onChange, required }) => (
         value={value}
         onChange={onChange}
         required={required}
-        className="w-full p-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-600 focus:border-indigo-600 transition duration-150"
+        style={{
+          width: '100%',
+          padding: '0.7rem 0.85rem',
+          borderRadius: '8px',
+          border: '1px solid rgba(255,255,255,0.2)',
+          background: 'rgba(255,255,255,0.1)',
+          fontSize: '0.95rem',
+          color: '#ffffff',
+          boxShadow: 'inset 0 1px 0 rgba(2,6,23,0.02)'
+        }}
       />
     </div>
 );
